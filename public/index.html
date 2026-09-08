@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Sistema avanzado de análisis de trading forex con inteligencia artificial y análisis multi-timeframe">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Exit Trading">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
+    <link rel="shortcut icon" href="/icons/icon-192x192.png">
+    
+    <title>Exit Trading - Sistema de Análisis Forex Inteligente</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚀 Exit Trading 2.0</h1>
+            <p class="subtitle">Sistema de Análisis Forex Inteligente Multi-Timeframe</p>
+            <div class="status-indicator">
+                <span class="status-dot" id="statusDot"></span>
+                <span class="status-text" id="statusText">Conectando...</span>
+            </div>
+        </header>
+
+        <!-- Configuración Pre-Inicio -->
+        <section class="config-panel" id="configPanel">
+            <h2>⚙️ Configuración del Sistema</h2>
+            
+            <!-- API Provider -->
+            <div class="config-section">
+                <h3>🔌 Conexión API</h3>
+                <div class="config-group">
+                    <label for="providerSelect">Proveedor de Datos:</label>
+                    <select id="providerSelect">
+                        <option value="">Seleccionar proveedor...</option>
+                    </select>
+                    <div class="provider-info" id="providerInfo">
+                        <p class="info-placeholder">Selecciona un proveedor para ver detalles</p>
+                    </div>
+                    <button id="testProviderBtn" class="btn btn-secondary" disabled>🧪 Probar Conexión</button>
+                </div>
+            </div>
+
+            <!-- Mercado -->
+            <div class="config-section">
+                <h3>💱 Mercado</h3>
+                <div class="config-group">
+                    <label>Pares de Divisas:</label>
+                    <div class="checkbox-group" id="pairsCheckboxGroup">
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="EUR/USD" checked> EUR/USD
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="GBP/USD"> GBP/USD
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="USD/JPY"> USD/JPY
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="USD/CHF"> USD/CHF
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="AUD/USD"> AUD/USD
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="USD/CAD"> USD/CAD
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="NZD/USD"> NZD/USD
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Temporalidades -->
+            <div class="config-section">
+                <h3>⏱️ Temporalidades de Análisis</h3>
+                <div class="config-group">
+                    <label>Selecciona Timeframes (múltiples permitidos):</label>
+                    <div class="checkbox-group" id="timeframesCheckboxGroup">
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="5s"> 5 segundos (Scalping)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="30s"> 30 segundos (Scalping)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="1m" checked> 1 minuto (Corto plazo)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="5m"> 5 minutos (Corto plazo)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="15m" checked> 15 minutos (Medio plazo)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="30m"> 30 minutos (Medio plazo)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="1h" checked> 1 hora (Largo plazo)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="1d"> 1 día (Swing)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="1w"> 1 semana (Position)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notificaciones -->
+            <div class="config-section">
+                <h3>🔔 Notificaciones</h3>
+                <div class="config-group">
+                    <label for="notificationInterval">Frecuencia de Notificaciones:</label>
+                    <select id="notificationInterval">
+                        <option value="5">Cada 5 segundos</option>
+                        <option value="10">Cada 10 segundos</option>
+                        <option value="20">Cada 20 segundos</option>
+                        <option value="30" selected>Cada 30 segundos</option>
+                        <option value="60">Cada 1 minuto</option>
+                        <option value="120">Cada 2 minutos</option>
+                        <option value="300">Cada 5 minutos</option>
+                    </select>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="soundEnabled" checked> 🔊 Sonido
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="visualAlerts" checked> 👁️ Alertas visuales
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visión -->
+            <div class="config-section">
+                <h3>👁️ Análisis Visual</h3>
+                <div class="config-group">
+                    <label for="visualMode">Modo de Entrada Visual:</label>
+                    <select id="visualMode">
+                        <option value="none" selected>Desactivado</option>
+                        <option value="camera">📷 Cámara</option>
+                        <option value="screen">📱 Compartir Pantalla</option>
+                    </select>
+                    <div class="visual-preview" id="visualPreview">
+                        <video id="visualVideo" autoplay playsinline muted></video>
+                        <canvas id="visualCanvas" style="display:none;"></canvas>
+                        <div class="visual-placeholder" id="visualPlaceholder">
+                            <p>La vista visual aparecerá aquí cuando se active</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Control -->
+            <div class="control-buttons">
+                <button id="startSystemBtn" class="btn btn-success btn-large">🚀 INICIAR SISTEMA</button>
+                <button id="stopSystemBtn" class="btn btn-danger btn-large" disabled>⏹️ DETENER SISTEMA</button>
+            </div>
+        </section>
+
+        <!-- Panel Principal (oculto hasta iniciar) -->
+        <main class="main-content" id="mainContent" style="display:none;">
+            <!-- Video/Visual Panel -->
+            <section class="visual-panel">
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3>📹 Análisis Visual</h3>
+                        <span class="visual-status" id="visualStatus">Inactivo</span>
+                    </div>
+                    <div class="visual-content">
+                        <video id="mainVisualVideo" autoplay playsinline muted></video>
+                        <canvas id="mainVisualCanvas"></canvas>
+                        <div class="visual-overlay" id="visualOverlay">
+                            <div class="visual-info">
+                                <span class="visual-mode" id="currentVisualMode">--</span>
+                                <span class="visual-confidence" id="visualConfidence">--%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resultados de Análisis -->
+            <section class="results-section">
+                <div class="results-header">
+                    <h3>📊 Resultados de Análisis en Tiempo Real</h3>
+                    <div class="system-info">
+                        <span class="info-item">🔌 <span id="currentProvider">--</span></span>
+                        <span class="info-item">⏱️ <span id="currentTimeframes">--</span></span>
+                        <span class="info-item">🔔 <span id="currentNotificationInterval">--</span></span>
+                    </div>
+                </div>
+
+                <!-- Grid de Resultados por Par -->
+                <div class="results-grid" id="resultsGrid">
+                    <!-- Los resultados se generarán dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Análisis Detallado -->
+            <section class="detailed-analysis">
+                <div class="analysis-tabs">
+                    <button class="tab-btn active" data-tab="multitimeframe">📊 Multi-Timeframe</button>
+                    <button class="tab-btn" data-tab="technical">📈 Técnico</button>
+                    <button class="tab-btn" data-tab="news">📰 Noticias</button>
+                    <button class="tab-btn" data-tab="visual">👁️ Visual</button>
+                    <button class="tab-btn" data-tab="history">📜 Historial</button>
+                </div>
+
+                <div class="tab-content active" id="multitimeframe-tab">
+                    <div class="multitimeframe-analysis">
+                        <h4>Análisis Jerárquico de Timeframes</h4>
+                        <div class="hierarchy-grid">
+                            <div class="hierarchy-level">
+                                <span class="level-label">Tendencia General (1W-1D)</span>
+                                <span class="level-value" id="hierarchyGeneral">--</span>
+                            </div>
+                            <div class="hierarchy-level">
+                                <span class="level-label">Tendencia Diaria (1D-4H-1H)</span>
+                                <span class="level-value" id="hierarchyDaily">--</span>
+                            </div>
+                            <div class="hierarchy-level">
+                                <span class="level-label">Tendencia Intermedia (1H-30M-15M)</span>
+                                <span class="level-value" id="hierarchyIntermediate">--</span>
+                            </div>
+                            <div class="hierarchy-level">
+                                <span class="level-label">Situación Actual (15M-5M-1M)</span>
+                                <span class="level-value" id="hierarchyCurrent">--</span>
+                            </div>
+                            <div class="hierarchy-level">
+                                <span class="level-label">Movimiento Inmediato (1M-30S-5S)</span>
+                                <span class="level-value" id="hierarchyImmediate">--</span>
+                            </div>
+                        </div>
+                        <div class="consensus-display">
+                            <span class="consensus-label">Consenso General:</span>
+                            <span class="consensus-value" id="generalConsensus">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="technical-tab">
+                    <div class="technical-analysis">
+                        <h4>Análisis Técnico Detallado</h4>
+                        <div class="technical-grid" id="technicalGrid">
+                            <!-- Se llenará dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="news-tab">
+                    <div class="news-analysis">
+                        <h4>Análisis de Noticias</h4>
+                        <div class="news-sentiment" id="newsSentiment">
+                            <span class="sentiment-label">Sentimiento del Mercado:</span>
+                            <span class="sentiment-value">--</span>
+                        </div>
+                        <div class="news-list" id="newsList">
+                            <p class="placeholder">Esperando datos de noticias...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="visual-tab">
+                    <div class="visual-analysis">
+                        <h4>Análisis Visual</h4>
+                        <div class="visual-results" id="visualResults">
+                            <p class="placeholder">Análisis visual no activo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="history-tab">
+                    <div class="history-analysis">
+                        <h4>Historial de Análisis</h4>
+                        <div class="history-controls">
+                            <button id="exportHistoryBtn" class="btn btn-secondary">📥 Exportar CSV</button>
+                            <button id="clearHistoryBtn" class="btn btn-secondary">🗑️ Limpiar Historial</button>
+                        </div>
+                        <div class="history-list" id="historyList">
+                            <p class="placeholder">Esperando historial...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estadísticas -->
+            <section class="stats-section">
+                <h3>📈 Estadísticas de la Sesión</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Análisis Realizados:</span>
+                        <span class="stat-value" id="totalAnalyses">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Señales BUY:</span>
+                        <span class="stat-value" id="buySignals">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Señales SELL:</span>
+                        <span class="stat-value" id="sellSignals">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Señales HOLD:</span>
+                        <span class="stat-value" id="holdSignals">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Confianza Promedio:</span>
+                        <span class="stat-value" id="avgConfidence">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Tiempo de Sesión:</span>
+                        <span class="stat-value" id="sessionDuration">00:00:00</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>⚠️ <strong>Disclaimer:</strong> Este sistema es solo para fines educativos. El trading conlleva riesgos significativos. Las señales son sugerencias, no garantías.</p>
+        </footer>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registrado con éxito:', registration.scope);
+                        
+                        // Verificar actualizaciones
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Nuevo service worker disponible
+                                    console.log('Nuevo contenido disponible; recarga la página para actualizar.');
+                                    if (confirm('Nueva versión disponible. ¿Deseas actualizar?')) {
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        });
+                    })
+                    .catch((error) => {
+                        console.log('Error registrando Service Worker:', error);
+                    });
+            });
+        }
+
+        // Solicitar permiso para notificaciones
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission().then((permission) => {
+                console.log('Permiso de notificaciones:', permission);
+            });
+        }
+    </script>
+</body>
+</html>

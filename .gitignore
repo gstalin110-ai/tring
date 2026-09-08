@@ -1,0 +1,41 @@
+# Dependencias
+node_modules/
+package-lock.json
+yarn.lock
+
+# Archivos generados
+dist/
+build/
+*.log
+
+# Entorno
+.env
+.env.local
+.env.*.local
+
+# Datos
+data/
+*.json
+!package.json
+!package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Capacitor
+android/
+ios/
+.keystore
+*.jks
+
+# Temporales
+*.tmp
+*.temp

@@ -1,0 +1,37 @@
+{
+  "name": "exit-trading",
+  "version": "2.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js",
+    "generate-icons": "node scripts/generate-icons.js",
+    "cap:sync": "npx cap sync",
+    "cap:copy": "npx cap copy",
+    "cap:open:android": "npx cap open android",
+    "android:build": "bash scripts/build-android.sh debug",
+    "android:release": "bash scripts/build-android.sh release",
+    "android:sync": "npx cap sync android",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/android": "^8.5.1",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.5.1",
+    "@capacitor/core": "^8.5.1",
+    "axios": "^1.20.0",
+    "compression": "^1.8.1",
+    "express": "^5.2.1",
+    "jimp": "^1.6.1",
+    "node-cron": "^4.6.0",
+    "sharp": "^0.35.4",
+    "socket.io": "^4.8.3",
+    "technicalindicators": "^3.1.0",
+    "ws": "^8.21.3"
+  }
+}
