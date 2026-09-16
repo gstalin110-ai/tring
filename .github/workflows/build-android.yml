@@ -84,4 +84,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: exit-trading-release-apk
-          path: android/app/build
+          path: android/app/build/outputs/apk/release/*.apk
