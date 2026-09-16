@@ -2,9 +2,13 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+
   workflow_dispatch:
 
 jobs:
@@ -12,76 +16,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: |
-          npm ci
-          npm rebuild sharp
-
-      - name: Generate icons
-        run: npm run generate-icons
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Check Android folder
-        run: |
-          if [ ! -d "android" ]; then
-            echo "ERROR: La carpeta android no existe"
-            exit 1
-          fi
-
-      - name: Grant execute permission
-        run: chmod +x android/gradlew
-
-      - name: Sync Capacitor
-        run: npx cap sync android
-
-      - name: Generate Android icons
-        run: node scripts/generate-android-icons.js
-
-      - name: Build Debug APK
-        run: |
-          cd android
-          ./gradlew assembleDebug
-
-      - name: Build Release APK
-        run: |
-          cd android
-          ./gradlew assembleRelease
-
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: exit-trading-debug-apk
-          path: android/app/build/outputs/apk/debug/*.apk
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: exit-trading-release-apk
-          path: android/app/build/outputs/apk/release/*.apk
+    
